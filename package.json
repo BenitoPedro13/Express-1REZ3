@@ -1,0 +1,25 @@
+{
+  "name": "vuex-back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/BenitoPedro13/Express-1REZ3.git"
+  },
+  "author": "1REZ3",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BenitoPedro13/Express-1REZ3/issues"
+  },
+  "homepage": "https://www.quantic.digital",
+  "dependencies": {
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.12",
+    "pg": "^8.6.0"
+  }
+}
