@@ -37,7 +37,7 @@ router.route('')
     .post(async (req, res, next) => {
         try {
             const {nome, usuario_id, preco, descricao, fotos} = req.body
-            const response = await produtoAPI.postProduto(nome, usuario_id, preco, descricao, fotos)
+            const response = await ProdutoAPI.postProduto(nome, usuario_id, preco, descricao, fotos)
             res.json({success: response})
         } catch (error) {
             console.error(error)
@@ -45,15 +45,25 @@ router.route('')
         }
     })
 
-router.delete('/:id', (req, res, next) => {
-    try {
-        const {id} = req.params
-        const response = produtoAPI.deleteProduto(id)
-        res.json(response)
-    } catch (error) {
-        console.error(error)
-        res.status(500).json({success: false})
-    }
-})
+router.route('/:id')
+    .get(async (req, res, next) => {
+        try {
+            const {id} = req.params
+            const response = await ProdutoAPI.getProdutoById(id)
+            res.json(response)
+        } catch (error) {
+            console.error(error)
+        }
+    })
+    .delete(async(req, res, next) => {
+        try {
+            const {id} = req.params
+            const response = await ProdutoAPI.deleteProduto(id)
+            res.json(response)
+        } catch (error) {
+            console.error(error)
+            res.status(500).json({success: false})
+        }
+    })
     
 module.exports = router

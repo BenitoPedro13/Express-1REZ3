@@ -4,7 +4,7 @@ class UsuarioDAO {
     static async getUsuario(id){
         try {
             const usuario = await pg.query('SELECT * FROM usuarios WHERE email = $1', [id])
-            return usuario.rows
+            return usuario.rows[0]
         } catch (error) {
             return console.error(error)
         }

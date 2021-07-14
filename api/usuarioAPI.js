@@ -10,7 +10,10 @@ class UsuarioAPI {
         }
     }
     static async postUsuario(nome, email, senha, cep, rua, numero, bairro, cidade, estado){
-        if(this.getUsuario(email).length === 0){
+
+        const usuario = await this.getUsuario(email)
+
+        if(!usuario){
           try {
             const res = await UsuarioDAO.postUsuario(nome, email, senha, cep, rua, numero, bairro, cidade, estado)
             return res

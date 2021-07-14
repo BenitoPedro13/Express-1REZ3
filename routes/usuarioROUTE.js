@@ -18,7 +18,7 @@ router.route('/:id')
         try {
             const {id} = req.params
             const usuario = await userAPI.getUsuario(id)
-            res.json(usuario[0])
+            res.json(usuario)
         } catch (error) {
             console.log(error.message)
             res.status(500).json({error: 'Internal Server Error'})

@@ -1,17 +1,29 @@
 const pg = require('../db.js')
 
 class ProdutoDAO {
-    static async getProdutos(query = null){
-        let produtos
-
-        if(query){
-            const search = query.toString()
-            produtos = await pg.query(`SELECT * FROM produtos WHERE nome ~* '.*${search}.*'`)
-            return produtos.rows
+    static async getProdutoById(id) {
+        try {
+            const produto = await pg.query('SELECT * FROM produtos WHERE id = $1', [id])
+            return produto.rows[0]
+        } catch (error) {
+            console.error(error)
         }
-        else {
-            produtos = await pg.query(`SELECT * FROM produtos`)
-            return produtos.rows
+    }
+    static async getProdutos(query = null){
+
+        let produtos
+        try {
+            if(query){
+                const search = query.toString()
+                produtos = await pg.query(`SELECT * FROM produtos WHERE nome ~* '.*${search}.*'`)
+                return produtos.rows
+            }
+            else {
+                produtos = await pg.query(`SELECT * FROM produtos`)
+                return produtos.rows
+            } 
+        } catch (error) {
+            console.error(error)
         }
 
     }
