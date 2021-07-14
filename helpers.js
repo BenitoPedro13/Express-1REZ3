@@ -1,8 +1,9 @@
 module.exports = {
     paginar(limit, page = 1, pages) {
-        const start = page === 1 ? 0 : limit * (page - 1);
-        const end = start + limit
+        const start = limit * page - limit;
+        const end = start + Number(limit)
         const pagina = pages.slice(start, end)
+        console.log(start, end)
         return pagina
     }
 }
