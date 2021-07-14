@@ -4,7 +4,7 @@ class TransacaoDAO {
     static async getCompras(comprador_id){
         try {
 
-            const compras = pg.query(`SELECT * FROM transacoes WHERE comprador_id = $1`, [comprador_id])
+            const compras = await pg.query(`SELECT * FROM transacoes WHERE comprador_id = $1`, [comprador_id])
             return compras
 
         } catch (error) {
@@ -15,7 +15,7 @@ class TransacaoDAO {
     static async getVendas(vendedor_id){
         try {
             
-            const vendas = pg.query(`SELECT * FROM transacoes WHERE vendedor_id = $1`, [vendedor_id])
+            const vendas = await pg.query(`SELECT * FROM transacoes WHERE vendedor_id = $1`, [vendedor_id])
             return vendas
 
         } catch (error) {
