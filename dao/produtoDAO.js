@@ -1,4 +1,5 @@
 const pg = require('../db.js')
+const {emailToId} = require('../helpers.js')
 
 class ProdutoDAO {
     static async getProdutoById(id) {
@@ -10,7 +11,6 @@ class ProdutoDAO {
         }
     }
     static async getProdutos(query = null){
-
         let produtos
         try {
             if(query){
@@ -29,7 +29,7 @@ class ProdutoDAO {
     }
     static async getProdutosUsuario(query){
         try {
-            const usuario_id = await this.emailToId(query)
+            const usuario_id = await emailToId(query)
             const produtos = await pg.query('SELECT * FROM produtos WHERE usuario_id = $1', [usuario_id])
             return produtos.rows
         } catch (error) {
@@ -38,15 +38,15 @@ class ProdutoDAO {
         }   
     }
     static async postProduto(nome, email, preco, descricao, fotos = false){
-        const usuario_id = await this.emailToId(email)
+        const usuario_id = await emailToId(email)
         try {
             if(!fotos){
-                const response = await pg.query(`INSERT INTO produtos(nome, usuario_id, preco, descricao)
+                await pg.query(`INSERT INTO produtos(nome, usuario_id, preco, descricao)
                                                 VALUES($1, $2, $3, $4)`,
                                                 [nome, usuario_id, preco, descricao])
                 return true
             }
-            const response = await pg.query(`INSERT INTO produtos(nome, usuario_id, preco, descricao, fotos)
+            await pg.query(`INSERT INTO produtos(nome, usuario_id, preco, descricao, fotos)
                                             VALUES($1, $2, $3, $4, $5)`,
                                             [nome, usuario_id, preco, descricao, fotos])
             return true
@@ -62,15 +62,6 @@ class ProdutoDAO {
         } catch (error) {
             console.error(error)
             return {success: false}
-        }
-    }
-    static async emailToId(email){
-        try {
-            const usuario = await pg.query('SELECT * FROM usuarios WHERE email = $1', [email])
-            return usuario.rows[0].id
-        } catch (error) {
-            console.error(error)
-            throw error
         }
     }
 }
