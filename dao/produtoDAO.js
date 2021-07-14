@@ -1,6 +1,21 @@
 const pg = require('../db.js')
 
 class ProdutoDAO {
+    static async getProdutos(query = null){
+        let produtos
+
+        if(query){
+            const search = query.toString()
+            produtos = await pg.query(`SELECT * FROM produtos WHERE nome ~* '.*${search}.*'`)
+            console.log(produtos.rows)
+            return produtos.rows
+        }
+        else {
+            produtos = await pg.query(`SELECT * FROM produtos`)
+            return produtos.rows
+        }
+
+    }
     static async getProdutosUsuario(query){
         try {
             const usuario_id = await this.emailToId(query)

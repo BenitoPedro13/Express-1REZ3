@@ -1,6 +1,10 @@
 const ProdutoDAO = require('../dao/produtoDAO.js')
 
 class ProdutoAPI {
+    static async getProdutos(query){
+        const produtos = await ProdutoDAO.getProdutos(query)
+        return produtos
+    }
     static async getProdutosUsuario(query){
         
         try {
