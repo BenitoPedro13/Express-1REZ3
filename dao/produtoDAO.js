@@ -7,7 +7,6 @@ class ProdutoDAO {
         if(query){
             const search = query.toString()
             produtos = await pg.query(`SELECT * FROM produtos WHERE nome ~* '.*${search}.*'`)
-            console.log(produtos.rows)
             return produtos.rows
         }
         else {

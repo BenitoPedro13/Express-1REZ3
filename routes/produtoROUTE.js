@@ -1,30 +1,30 @@
-const express = require('express')
+const express = require('express') 
 const ProdutoAPI = require('../api/produtoAPI.js')
+const {paginar} = require('../helpers.js')
 const router = express.Router()
-const produtoAPI = require('../api/produtoAPI.js')
+
 
 router.route('')
     .get(async (req, res, next) => {
         try {
-            const {q, usuario_id} = req.query
+            const {q, usuario_id, _limit, _page} = req.query
             let produtos
 
             if(q){
-                console.log(q)
                 produtos = await ProdutoAPI.getProdutos(q)
                 res.set('x-total-count', produtos.length)
+                produtos = paginar(_limit, _page, produtos)
                 res.json(produtos)
             }
             else if(usuario_id){
-                console.log('usuario_id')
-                produtos = await produtoAPI.getProdutosUsuario(usuario_id)
+                produtos = await ProdutoAPI.getProdutosUsuario(usuario_id)
                 res.set('x-total-count', produtos.length)
                 res.json(produtos) 
             }
             else{
-                console.log('none')
-                produtos = await produtoAPI.getProdutos()
+                produtos = await ProdutoAPI.getProdutos()
                 res.set('x-total-count', produtos.length)
+                produtos = paginar(_limit, _page, produtos)
                 res.json(produtos)
             }
             

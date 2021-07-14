@@ -9,7 +9,7 @@ const produto = require('./routes/produtoROUTE.js')
 
 const app = express()
 
-app.use(cors())
+app.use(cors({exposedHeaders: ['x-total-count']}))
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
