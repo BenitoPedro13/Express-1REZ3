@@ -21,10 +21,7 @@ app.use('/produto', produto)
 app.use('/transacao', transacao)
 
 app.all('*', (req, res) => {
-    res.send(`
-        <h1>Pagina nao encontrada, deseja retornar para a Home ?</h1>
-        <a href="https://www.quantic.digital">Voltar para Home</a>
-    `)
+    res.redirect('/index.html')
 })
 
 app.listen(3000, () => console.log('Server running on port 3000....'))
