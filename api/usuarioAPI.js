@@ -30,7 +30,7 @@ class UsuarioAPI {
       const usuario = await this.getUsuario(email)
       
 
-      if(usuario){
+      if(!usuario){
         try {
           const usuario_id = await emailToId(id)
           const res = await UsuarioDAO.putUsuario(usuario_id, nome, email, senha, cep, rua, numero, bairro, cidade, estado)

@@ -29,6 +29,10 @@ class TransacaoDAO {
     }
     static async postTransacao(comprador_id, vendedor_id, produto, endereco){
         try {
+            await pg.query(`UPDATE produtos
+                            SET vendido = 'true'
+                            WHERE id = $1`,
+                            [produto.id])
             await pg.query(`INSERT INTO transacoes(comprador_id, vendedor_id, produto, endereco)
                             VALUES($1, $2, $3, $4)`,
                             [comprador_id, vendedor_id, produto, endereco]) 
