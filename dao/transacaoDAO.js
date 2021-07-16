@@ -4,7 +4,9 @@ class TransacaoDAO {
     static async getCompras(comprador_id){
         try {
 
-            const compras = await pg.query(`SELECT * FROM transacoes WHERE comprador_id = $1`, [comprador_id])
+            const compras = await pg.query(`SELECT transacoes.*, usuarios.email
+                                            FROM transacoes INNER JOIN usuarios ON id = $1
+                                            WHERE comprador_id = $1`, [comprador_id])
             return compras
 
         } catch (error) {
@@ -15,7 +17,9 @@ class TransacaoDAO {
     static async getVendas(vendedor_id){
         try {
             
-            const vendas = await pg.query(`SELECT * FROM transacoes WHERE vendedor_id = $1`, [vendedor_id])
+            const vendas = await pg.query(`SELECT transacoes.*, usuarios.email
+                                           FROM transacoes INNER JOIN usuarios ON id = $1
+                                           WHERE vendedor_id = $1`, [vendedor_id])
             return vendas
 
         } catch (error) {
@@ -23,11 +27,11 @@ class TransacaoDAO {
             return {success: false}
         }
     }
-    static async postTransacao(comprador_id, vendedor_id, produto, cep, rua, numero, bairro, cidade, estado){
+    static async postTransacao(comprador_id, vendedor_id, produto, endereco){
         try {
-            await pg.query(`INSERT INTO transacoes(comprador_id, vendedor_id, produto, cep, rua, numero, bairro, cidade, estado)
-                            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
-                            [comprador_id, vendedor_id, produto, cep, rua, numero, bairro, cidade, estado]) 
+            await pg.query(`INSERT INTO transacoes(comprador_id, vendedor_id, produto, endereco)
+                            VALUES($1, $2, $3, $4)`,
+                            [comprador_id, vendedor_id, produto, endereco]) 
 
             return {success: true}
         } catch (error) {

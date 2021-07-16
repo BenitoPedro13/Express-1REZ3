@@ -27,10 +27,9 @@ class TransacaoAPI {
     }
     static async postTransacao(email_comprador, vendedor_id, produto, endereco){
         try {
-            const {cep, rua, numero, bairro, cidade, estado} = endereco
             const comprador_id = await emailToId(email_comprador)
 
-            const response = await TransacaoDAO.postTransacao(comprador_id, vendedor_id, produto, cep, rua, numero, bairro, cidade, estado)
+            const response = await TransacaoDAO.postTransacao(comprador_id, vendedor_id, produto, endereco)
             return response
         } catch (error) {
             console.error(error)
