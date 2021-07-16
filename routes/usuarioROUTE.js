@@ -20,8 +20,19 @@ router.route('/:id')
             const usuario = await userAPI.getUsuario(id)
             res.json(usuario)
         } catch (error) {
-            console.log(error.message)
+            console.error(error)
             res.status(500).json({error: 'Internal Server Error'})
+        }
+    })
+    .put(async (req, res, next) => {
+        try {
+            const {id} = req.params
+            const {nome, email, senha, cep, rua, numero, bairro, cidade, estado} = req.body
+            const response = await userAPI.putUsuario(id, nome, email, senha, cep, rua, numero, bairro, cidade, estado)
+            res.json({success: response})
+        } catch (error) {
+            console.error(error)
+            res.json({success: false})
         }
     }) 
 
