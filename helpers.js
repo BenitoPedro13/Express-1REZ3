@@ -15,5 +15,16 @@ module.exports = {
             console.error(error)
             throw error
         }
+    },
+    buildToken(payload){
+        const secret = '0Dvvrvh7wROPQKzS6He3Nz7hv9fyvnNrszCKpbHBfzQHy948np'
+        const token = jwt.sign(payload, secret, {expiresIn: 86400})
+        return token
+    },
+    verify(payload){
+        const secret = '0Dvvrvh7wROPQKzS6He3Nz7hv9fyvnNrszCKpbHBfzQHy948np'
+        const verification = jwt.verify(payload, secret)
+        return verification
     }
+
 }

@@ -1,10 +1,12 @@
 const UsuarioDAO = require('../dao/usuarioDAO.js')
-const {emailToId} = require('../helpers.js')
+const {emailToId, buildToken} = require('../helpers.js')
 
 class UsuarioAPI {
     static async getUsuario(id){
         try {
             const usuario = await UsuarioDAO.getUsuario(id)
+            delete usuario.senha
+            usuario.token = buildToken({usuario: usuario.id})
             return usuario
         } catch (error) {
             return console.error(error.message)
