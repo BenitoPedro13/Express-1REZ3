@@ -1,4 +1,5 @@
 const pg = require('./db.js')
+const jwt = require('jsonwebtoken')
 
 module.exports = {
     paginar(limit, page = 1, pages) {
