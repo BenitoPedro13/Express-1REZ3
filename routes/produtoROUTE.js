@@ -26,15 +26,19 @@ router.route('')
                 res.set('x-total-count', produtos.length)
                 produtos = produtos.reverse().sort((a, b) => {
                     if(a.vendido && b.vendido){
+                        console(1,a, b)
                         return 0
                     }
                     else if(!a.vendido && !b.vendido){
+                        console(2,a, b)
                         return 0
                     }
                     else if(a.vendido && !b.vendido){
+                        console(3,a, b)
                         return 1
                     }
                     else if(!a.vendido && b.vendido){
+                        console(4,a, b)
                         return -1
                     }
                 })
