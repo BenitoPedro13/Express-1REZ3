@@ -3,6 +3,20 @@ const ProdutoAPI = require('../api/produtoAPI.js')
 const {paginar} = require('../helpers.js')
 const router = express.Router()
 
+const ordenar = produtos => produtos.reverse().sort((a, b) => {
+    if((a.vendido == 'true') && (b.vendido == 'true')){
+        return 0
+    }
+    else if((a.vendido == 'false') && (b.vendido == 'false')){
+        return 0
+    }
+    else if((a.vendido == 'true') && (b.vendido == 'false')){
+        return 1
+    }
+    else if((a.vendido == 'false') && (b.vendido == 'true')){
+        return -1
+    }
+})
 
 router.route('')
     .get(async (req, res, next) => {
@@ -13,35 +27,20 @@ router.route('')
             if(q){
                 produtos = await ProdutoAPI.getProdutos(q)
                 res.set('x-total-count', produtos.length)
+                ordenar(produtos)
                 produtos = paginar(_limit, _page, produtos)
                 res.json(produtos)
             }
             else if(usuario_id){
                 produtos = await ProdutoAPI.getProdutosUsuario(usuario_id)
                 res.set('x-total-count', produtos.length)
+                ordenar(produtos)
                 res.json(produtos) 
             }
             else{
                 produtos = await ProdutoAPI.getProdutos()
                 res.set('x-total-count', produtos.length)
-                produtos = produtos.reverse().sort((a, b) => {
-                    if((a.vendido == 'true') && (b.vendido == 'true')){
-                        console.log(1,a, b)
-                        return 0
-                    }
-                    else if((a.vendido == 'false') && (b.vendido == 'false')){
-                        console.log(2,a, b)
-                        return 0
-                    }
-                    else if((a.vendido == 'true') && (b.vendido == 'false')){
-                        console.log(3,a, b)
-                        return 1
-                    }
-                    else if((a.vendido == 'false') && (b.vendido == 'true')){
-                        console.log(4,a, b)
-                        return -1
-                    }
-                })
+                ordenar(produtos)
                 produtos = paginar(_limit, _page, produtos)
                 res.json(produtos)
             }
