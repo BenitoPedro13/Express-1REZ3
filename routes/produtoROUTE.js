@@ -25,7 +25,7 @@ router.route('')
                 produtos = await ProdutoAPI.getProdutos()
                 res.set('x-total-count', produtos.length)
                 produtos = produtos.reverse().sort((a, b) => {
-                    if(a.vendido == true && b.vendido == true){
+                    if(a.vendido == 'true' && b.vendido == 'true'){
                         console.log(1,a, b)
                         return 0
                     }
@@ -33,11 +33,11 @@ router.route('')
                         console.log(2,a, b)
                         return 0
                     }
-                    else if(a.vendido == true && !b.vendido){
+                    else if(a.vendido == 'true' && !b.vendido){
                         console.log(3,a, b)
                         return 1
                     }
-                    else if(!a.vendido && b.vendido == true){
+                    else if(!a.vendido && b.vendido == 'true'){
                         console.log(4,a, b)
                         return -1
                     }
