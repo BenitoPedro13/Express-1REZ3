@@ -24,6 +24,21 @@ router.route('')
             else{
                 produtos = await ProdutoAPI.getProdutos()
                 res.set('x-total-count', produtos.length)
+                const produtos = produtos.sort((a, b) => {
+                    if(a.id > b.id){
+                        if(a.vendido && b.vendido){return -1}
+                        else if(a.vendido && !b.vendido){return 1}
+                        else if(!a.vendido && b.vendido){return -1}
+                        else return -1
+                    }
+                    else if(a.id < b.id){
+                        if(a.vendido && b.vendido){return 1}
+                        else if(a.vendido && !b.vendido){return 1}
+                        else if(!a.vendido && b.vendido){return -1}
+                        else return 1
+                    }
+                    else return 0
+                })
                 produtos = paginar(_limit, _page, produtos)
                 res.json(produtos)
             }
