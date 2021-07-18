@@ -9,6 +9,15 @@ class UsuarioDAO {
             return console.error(error)
         }
     }
+    static async login(email, senha){
+        try {
+            const usuario = await this.getUsuario(email)
+            return senha == usuario.senha ? true : false
+        } catch (error) {
+            console.error(error)
+            return false
+        }
+    }
     static async postUsuario(nome, email, senha, cep, rua, numero, bairro, cidade, estado) {
         try {
             await pg.query(`INSERT INTO usuarios(nome, email, senha, cep, rua,

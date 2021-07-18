@@ -12,6 +12,20 @@ class UsuarioAPI {
             return console.error(error.message)
         }
     }
+    static async login(email, senha){
+        const usuario = await this.getUsuario(email)
+
+        if(usuario){
+          try {
+            const response = await UsuarioDAO.login(email, senha)
+            return response ? {login: true, usuario: usuario} : {login: false}
+          } catch (error) {
+            console.error(error)
+            return {login: false}
+          }
+        }
+        return {login: false}
+    }
     static async postUsuario(nome, email, senha, cep, rua, numero, bairro, cidade, estado){
 
         const usuario = await this.getUsuario(email)

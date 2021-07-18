@@ -13,6 +13,17 @@ router.post('', async (req, res, next) => {
     }
 })
 
+router.post('/logar', async (req, res, next) => {
+    try {
+        const {email, senha} = req.body
+        const response = await userAPI.login(email, senha)
+        res.json(response)
+    } catch (error) {
+        console.error(error)
+        res.json({login: false})
+    }
+})
+
 router.route('/:id')
     .get(async (req, res, next) => {
         try {
