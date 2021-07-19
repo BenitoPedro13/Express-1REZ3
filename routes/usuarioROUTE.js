@@ -33,7 +33,7 @@ router.post('/logar', async (req, res, next) => {
 })
 
 router.route('/:id')
-    .get( verify, async (req, res, next) => {
+    .get( async (req, res, next) => {
         try {
             const {id} = req.params
             const usuario = await userAPI.getUsuario(id)
