@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const userAPI = require('../api/usuarioAPI.js')
+const {verify} = require('../helpers.js')
 
 router.post('', async (req, res, next) => {
     try {
@@ -25,7 +26,7 @@ router.post('/logar', async (req, res, next) => {
 })
 
 router.route('/:id')
-    .get(async (req, res, next) => {
+    .get( verify, async (req, res, next) => {
         try {
             const {id} = req.params
             const usuario = await userAPI.getUsuario(id)
@@ -35,7 +36,7 @@ router.route('/:id')
             res.status(500).json({error: 'Internal Server Error'})
         }
     })
-    .put(async (req, res, next) => {
+    .put( verify, async (req, res, next) => {
         try {
             const {id} = req.params
             const {nome, email, senha, cep, rua, numero, bairro, cidade, estado} = req.body
