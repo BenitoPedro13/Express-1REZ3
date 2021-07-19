@@ -1,6 +1,6 @@
 const express = require('express') 
 const ProdutoAPI = require('../api/produtoAPI.js')
-const {paginar} = require('../helpers.js')
+const {paginar, verify} = require('../helpers.js')
 const router = express.Router()
 
 const ordenar = produtos => produtos.reverse().sort((a, b) => {
@@ -51,7 +51,7 @@ router.route('')
         }
         
     })
-    .post(async (req, res, next) => {
+    .post(verify, async (req, res, next) => {
         try {
             const {nome, usuario_id, preco, descricao, fotos} = req.body
             const response = await ProdutoAPI.postProduto(nome, usuario_id, preco, descricao, fotos)
@@ -72,7 +72,7 @@ router.route('/:id')
             console.error(error)
         }
     })
-    .delete(async(req, res, next) => {
+    .delete(verify, async(req, res, next) => {
         try {
             const {id} = req.params
             const response = await ProdutoAPI.deleteProduto(id)

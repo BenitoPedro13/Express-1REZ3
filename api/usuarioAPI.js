@@ -43,10 +43,12 @@ class UsuarioAPI {
     }
     static async putUsuario(id, nome, email, senha, cep, rua, numero, bairro, cidade, estado){
 
-      const usuario = await this.getUsuario(email)
+      const novoUsuario = await this.getUsuario(email)
+      const usuario = await this.getUsuario(id)
       
+      console.log(novoUsuario, usuario)
 
-      if(!usuario){
+      if(!novoUsuario && usuario){
         try {
           const usuario_id = await emailToId(id)
           const res = await UsuarioDAO.putUsuario(usuario_id, nome, email, senha, cep, rua, numero, bairro, cidade, estado)

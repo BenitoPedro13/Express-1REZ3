@@ -10,7 +10,7 @@ const transacao = require('./routes/transacaoROUTE.js')
 
 const app = express()
 
-app.use(cors({exposedHeaders: ['x-total-count']}))
+app.use(cors({exposedHeaders: ['x-total-count'], allowedHeaders: ['*','x-access-token']}))
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))

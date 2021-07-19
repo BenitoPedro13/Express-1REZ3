@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const TransacaoAPI = require('../api/transacaoAPI.js')
+const {verify} = require('../helpers.js')
 
 router.route('')
-    .post(async (req, res, next) => {
+    .post(verify, async (req, res, next) => {
         try {
             const {comprador_id, vendedor_id, produto, endereco} = req.body
             const response = await TransacaoAPI.postTransacao(comprador_id, vendedor_id, produto, endereco)
@@ -14,7 +15,7 @@ router.route('')
             return res.json({success: false})
         }
     })
-    .get(async (req, res, next) => {
+    .get(verify, async (req, res, next) => {
         try {
             const {comprador_id, vendedor_id} = req.query
             if(comprador_id){
