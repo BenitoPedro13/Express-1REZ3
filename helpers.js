@@ -24,7 +24,6 @@ module.exports = {
     },
     async verify(req, res, next){
         const secret = '0Dvvrvh7wROPQKzS6He3Nz7hv9fyvnNrszCKpbHBfzQHy948np'
-        console.log(req.headers)
         const token = req.headers['x-access-token']
         if (!token) return res.status(401).json({ success: false, message: 'No token provided.' })
         await jwt.verify(token, secret, (err, decoded) => {
