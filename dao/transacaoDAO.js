@@ -18,7 +18,7 @@ class TransacaoDAO {
         try {
             
             const vendas = await pg.query(`SELECT transacoes.*, usuarios.email
-                                           FROM transacoes INNER JOIN usuarios ON id = $1
+                                           FROM transacoes INNER JOIN usuarios ON usuarios.id = transacoes.comprador_id
                                            WHERE vendedor_id = $1`, [vendedor_id])
             return vendas
 
