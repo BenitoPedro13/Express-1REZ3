@@ -1,7 +1,6 @@
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
-const jwt = require('jsonwebtoken')
 const path = require('path')
 
 const usuario = require('./routes/usuarioROUTE.js')
@@ -21,7 +20,7 @@ app.use('/produto', produto)
 app.use('/transacao', transacao)
 
 app.all('*', (req, res) => {
-    res.redirect('/index.html')
+    res.redirect('/')
 })
 
 app.listen(8080, () => console.log('Server running on port 8080....'))
