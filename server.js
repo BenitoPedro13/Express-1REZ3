@@ -21,7 +21,7 @@ app.use('/produto', produto)
 app.use('/transacao', transacao)
 
 app.all('*', (req, res) => {
-    res.redirect('/index.html')
+    res.redirect('/')
 })
 
 app.listen(8080, () => console.log('Server running on port 8080....'))
