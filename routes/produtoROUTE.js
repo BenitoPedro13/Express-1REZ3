@@ -55,7 +55,6 @@ router.route('')
         try {
             const fotos = req.file.path.match(/\/img.*$/i)
             const {nome, usuario_id, preco, descricao} = req.body
-            await console.log(fotos)
             
             const response = await ProdutoAPI.postProduto(nome, usuario_id, preco, descricao, fotos)
             res.json({success: response})
