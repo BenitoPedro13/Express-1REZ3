@@ -33,8 +33,11 @@ class ProdutoAPI {
             const response = await ProdutoDAO.postProduto(nome, usuario_id, preco, descricao)
             return response
         }
-        const response = await ProdutoDAO.postProduto(nome, usuario_id, preco, descricao, fotos)
-        return response
+        else if(fotos){
+           const response = await ProdutoDAO.postProduto(nome, usuario_id, preco, descricao, fotos)
+           return response
+        }
+        
     }
     static async deleteProduto(id){
         try {
