@@ -1,5 +1,18 @@
 const pg = require('./db.js')
+const path = require('path') 
 const jwt = require('jsonwebtoken')
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, path.join(__dirname, 'public', 'img'))
+    },
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9) + file.originalname.match(/\.[0-9a-z]+$/i)
+      cb(null, file.fieldname + '-' + uniqueSuffix)
+    }
+  })
+  
 
 module.exports = {
     paginar(limit, page = 1, pages) {
@@ -8,6 +21,7 @@ module.exports = {
         const pagina = pages.slice(start, end)
         return pagina
     },
+    upload: multer({storage: storage}),
     async emailToId(email){
         try {
             const usuario = await pg.query('SELECT * FROM usuarios WHERE email = $1', [email])

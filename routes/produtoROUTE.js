@@ -1,6 +1,6 @@
 const express = require('express') 
 const ProdutoAPI = require('../api/produtoAPI.js')
-const {paginar, verify} = require('../helpers.js')
+const {paginar, verify, upload} = require('../helpers.js')
 const router = express.Router()
 
 const ordenar = produtos => produtos.reverse().sort((a, b) => {
@@ -51,9 +51,12 @@ router.route('')
         }
         
     })
-    .post(verify, async (req, res, next) => {
+    .post(verify, upload.single('fotos'), async (req, res, next) => {
         try {
-            const {nome, usuario_id, preco, descricao, fotos} = req.body
+            const fotos = req.file.path.match(/\/img.*$/i)
+            const {nome, usuario_id, preco, descricao} = req.body
+            await console.log(fotos)
+            
             const response = await ProdutoAPI.postProduto(nome, usuario_id, preco, descricao, fotos)
             res.json({success: response})
         } catch (error) {
